@@ -64,4 +64,8 @@ module SSRS
   def self.upload_prefix
     "#{AUTO_UPLOAD_PATH}#{ssrs_config[PREFIX_KEY]}"
   end
+
+  def self.info(message)
+    Java::IrisSSRS::SSRS::LOG.info(message)
+  end
 end

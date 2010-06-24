@@ -9,7 +9,7 @@ module SSRS
     def upload_datasources
       @ssrs.mkdir( SSRS::DataSource::BASE_PATH )
       SSRS.datasources.each do |ds|
-        @ssrs.LOG.info("Creating DataSource #{ds.name}")
+        SSRS.info("Creating DataSource #{ds.name}")
         @ssrs.delete( ds.symbolic_name )
         @ssrs.createSQLDataSource( ds.symbolic_name, ds.connection_string )
       end
@@ -22,7 +22,7 @@ module SSRS
       end
       SSRS.reports.each do |report|
         upload_path = SSRS.upload_path(report.filename)
-        @ssrs.LOG.info("Uploading #{upload_path} from #{report.filename}")
+        SSRS.info("Uploading #{upload_path} from #{report.filename}")
         @ssrs.mkdir( File.dirname(upload_path) )
         @ssrs.createReport( "#{File.dirname(upload_path)}/#{File.basename(upload_path,'.rdl')}",
                             Java::JavaIo.File.new(report.generate_upload_version) )
