@@ -12,46 +12,34 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.logging.Logger;
 import javax.xml.namespace.QName;
 
+/**
+ * Adapter class for interacting with the SSRS service from ruby code.
+ */
 @SuppressWarnings( { "UnusedDeclaration" } )
 public class SSRS
 {
-  /*
-  public static void main( final String[] args )
-     throws Exception
-  {
-     final ConsoleHandler handler = new ConsoleHandler();
-     handler.setLevel( Level.FINEST );
-     SSRS.LOG.setLevel( Level.FINEST );
-     SSRS.LOG.addHandler( handler );
-     SSRS.LOG.setUseParentHandlers( false );
-
-     final SSRS ssrs = new SSRS( "/PD42/DEV" );
-     ssrs.delete( "/" );
-     ssrs.mkdir( "Foo" );
-
-     ssrs.mkdir( "DataSources" );
-     ssrs.createSQLDataSource( "/DataSources/MyDataSource",
-                               "MyServer",
-                               "MyDatabase",
-                               "MyUsername",
-                               "MyPassword" );
-     ssrs.mkdir( "Funky/Chicken" );
-     ssrs.delete( "Foo2" );
-     ssrs.createReport( "Funky/Chicken/ChickPeasAreNice", new File( args[ 0 ] ) );
-  }
-  */
   private static final Logger LOG = Logger.getLogger( SSRS.class.getName() );
-  private static final String BASE_URL = "/Auto";
   private static final String PATH_SEPARATOR = "/";
 
   private final ReportingService2005Soap _soap;
   private final String _prefix;
 
-  public SSRS( final String prefix )
+  /**
+   * Create an adapter for a specific service, acting on a particular path.
+   *
+   * @param wsdlURL the URL to the wsdl for the service
+   * @param prefix the prefix for all reports interacted with by this adapter
+   */
+  public SSRS( final URL wsdlURL, final String prefix )
   {
+    if ( null == wsdlURL )
+    {
+      throw new NullPointerException( "wsdlURL" );
+    }
     if ( null == prefix )
     {
       throw new NullPointerException( "prefix" );
@@ -60,13 +48,14 @@ public class SSRS
     final QName qName =
       new QName( "http://schemas.microsoft.com/sqlserver/2005/06/30/reporting/reportingservices",
                  "ReportingService2005" );
-    final ReportingService2005 service =
-      new ReportingService2005( ReportingService2005.class.getResource( "ReportService2005.wsdl" ), qName );
+    final ReportingService2005 service = new ReportingService2005( wsdlURL, qName );
     _soap = service.getReportingService2005Soap();
   }
 
-  public void createSQLDataSource( final String path,
-                                   final String connectionString )
+  /**
+   * Create a data source at path with a specific connection string.
+   */
+  public void createSQLDataSource( final String path, final String connectionString )
   {
     final DataSourceDefinition definition = new DataSourceDefinition();
     definition.setConnectString( connectionString );
@@ -79,8 +68,10 @@ public class SSRS
     createDataSource( path, definition );
   }
 
-  public void createDataSource( final String path,
-                                final DataSourceDefinition definition )
+  /**
+   * Create a data source at path with a using a complete data definition.
+   */
+  public void createDataSource( final String path, final DataSourceDefinition definition )
   {
     LOG.info( "Creating DataSource " + path + " with CS " + definition.getConnectString() );
     final String physicalName = toPhysicalFileName( path );
@@ -99,6 +90,9 @@ public class SSRS
     }
   }
 
+  /**
+   * Create a report at specific path from specified report file. Path must not exist.
+   */
   public void createReport( final String path, final File file )
   {
     LOG.info( "Creating Report " + path + " from file " + file.getAbsolutePath() );
@@ -128,6 +122,9 @@ public class SSRS
     }
   }
 
+  /**
+   * Delete symbolic path and all sub elements. Will skip if no such path.
+   */
   public void delete( final String path )
   {
     LOG.info( "Deleting item " + path );
@@ -145,6 +142,9 @@ public class SSRS
     }
   }
 
+  /**
+   * Create a directory node at specified path. Path must not exist.
+   */
   public void mkdir( final String filePath )
   {
     LOG.info( "Creating dir " + filePath );
@@ -154,7 +154,7 @@ public class SSRS
     for ( final String dir : physicalName.substring( 1 ).split( PATH_SEPARATOR ) )
     {
       final String parentDir = ( path.length() == 0 ) ? PATH_SEPARATOR : path.toString();
-      final ItemTypeEnum type = _soap.getItemType( join( path.toString(), dir ) );
+      final ItemTypeEnum type = _soap.getItemType( path.toString() + PATH_SEPARATOR + dir );
       if ( ItemTypeEnum.UNKNOWN == type )
       {
         LOG.finer( "Invoking createFolder(dir=" + dir + ",parentDir=" + parentDir + ")" );
@@ -202,14 +202,12 @@ public class SSRS
     }
   }
 
-  private String join( final String path, final String name )
-  {
-    return path + PATH_SEPARATOR + name;
-  }
-
+  /**
+   * Return the fully qualified path for specified name.
+   */
   private String toPhysicalFileName( final String name )
   {
-    return nameComponent( BASE_URL ) + nameComponent( _prefix ) + nameComponent( name );
+    return nameComponent( _prefix ) + nameComponent( name );
   }
 
   private String nameComponent( final String name )
@@ -228,9 +226,7 @@ public class SSRS
     }
   }
 
-
-  private void logWarnings( final String message,
-                            final ArrayOfWarning warnings )
+  private void logWarnings( final String message, final ArrayOfWarning warnings )
   {
     for ( final Warning warning : warnings.getWarning() )
     {
