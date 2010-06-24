@@ -12,7 +12,7 @@ Tool for managing SSRS reports
   spec.files          = Dir['{lib}/**/*', '*.gemspec'] +
                         ['lib/ssrs/ssrs-api.jar','LICENSE', 'README.rdoc', 'CHANGELOG']
   spec.require_paths  = ['lib']
-
+  spec.platform       = RUBY_PLATFORM[/java/]
   spec.bindir         = 'bin'
   spec.executable     = 'rptman'
 
