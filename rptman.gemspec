@@ -16,7 +16,7 @@ This is a buildr extension for packaging OSGi bundles using Bnd.
   spec.description    = <<-TEXT
 Tool for managing SSRS reports
   TEXT
-  spec.files          = Dir['{lib}/**/*', '*.gemspec'] + ['LICENSE', 'README.rdoc', 'CHANGELOG', 'Rakefile']
+  spec.files          = Dir['{lib}/**/*', '*.gemspec'] + ['LICENSE', 'README.rdoc', 'CHANGELOG']
   spec.require_paths  = ['lib']
 
   spec.has_rdoc         = false
