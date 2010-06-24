@@ -10,5 +10,5 @@ uploading the report files directly to the server
 The extension is packaged as a jruby gem named "rptman", consult the ruby
 gems installation steps but typically it is 
 
-  jgem install buildr-bnd
+  jgem install rptman
 
