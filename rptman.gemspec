@@ -9,7 +9,8 @@ Gem::Specification.new do |spec|
   spec.description    = <<-TEXT
 Tool for managing SSRS reports
   TEXT
-  spec.files          = Dir['{lib}/**/*', '*.gemspec'] + ['LICENSE', 'README.rdoc', 'CHANGELOG']
+  spec.files          = Dir['{lib}/**/*', '*.gemspec'] +
+                        ['lib/ssrs/ssrs-api.jar','LICENSE', 'README.rdoc', 'CHANGELOG']
   spec.require_paths  = ['lib']
 
   spec.has_rdoc         = false
