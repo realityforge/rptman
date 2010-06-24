@@ -6,6 +6,13 @@ module SSRS
       @ssrs = Java::IrisSSRS::SSRS.new(wsdl_url, prefix)
     end
 
+    def upload
+      self.upload_datasources
+      self.upload_reports
+    end
+
+    private
+
     def upload_datasources
       @ssrs.mkdir( SSRS::DataSource::BASE_PATH )
       SSRS.datasources.each do |ds|
