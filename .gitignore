@@ -2,3 +2,5 @@
 /.rakeTasks
 /pkg
 /rdoc
+/ssrs-api/target
+/ssrs-api/generated

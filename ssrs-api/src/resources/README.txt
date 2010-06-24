@@ -1,0 +1,1 @@
+ReportService.wsdl retrieved from /SSRS01_WS/ReportService2005.asmx?wsdl
