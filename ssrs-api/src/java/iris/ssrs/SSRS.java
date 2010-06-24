@@ -22,7 +22,7 @@ import javax.xml.namespace.QName;
 @SuppressWarnings( { "UnusedDeclaration" } )
 public class SSRS
 {
-  private static final Logger LOG = Logger.getLogger( SSRS.class.getName() );
+  public static final Logger LOG = Logger.getLogger( SSRS.class.getName() );
   private static final String PATH_SEPARATOR = "/";
 
   private final ReportingService2005Soap _soap;
