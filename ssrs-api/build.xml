@@ -19,7 +19,6 @@
       <arg value="-p"/>
       <arg value="iris.ssrs.api"/>
     </exec>
-    <copy  file="${report-service.wsdl}" todir="generated/java/iris/ssrs/api"/>
   </target>
 
   <target name="compile" depends="generate">
