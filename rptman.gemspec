@@ -3,13 +3,6 @@ Gem::Specification.new do |spec|
   spec.version        = `git describe`.strip.split('-').first
   spec.authors        = ['Peter Donald']
   spec.email          = ["peter@realityforge.org"]
-  spec.homepage       = "http://github.com/realityforge/buildr-bnd"
-  spec.summary        = "Buildr extension for packaging OSGi bundles using bnd"
-  spec.description    = <<-TEXT
-This is a buildr extension for packaging OSGi bundles using Bnd. 
-  TEXT
-  spec.files          = Dir['{lib,spec}/**/*', '*.gemspec'] +
-                        ['LICENSE', 'README.rdoc', 'CHANGELOG', 'Rakefile']
 
   spec.homepage       = "http://github.com/stocksoftware/rptman"
   spec.summary        = "Tool for managing SSRS reports"
