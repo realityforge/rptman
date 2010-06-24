@@ -1,0 +1,14 @@
+= rptman
+
+This is a command line tool and suite of rake tasks for uploading and
+manipulating SSRS reports. The tool can generate project files for
+the "SQL Server Business Intelligence Development Studio" as well as
+uploading the report files directly to the server 
+
+== Installation
+
+The extension is packaged as a jruby gem named "rptman", consult the ruby
+gems installation steps but typically it is 
+
+  jgem install buildr-bnd
+
