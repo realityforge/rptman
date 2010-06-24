@@ -1,4 +1,4 @@
-<project name="ssrs-api" default="package" basedir=".">
+<project name="ssrs-api" default="rebuild" basedir=".">
   <property name="report-service.wsdl" location="src/resources/ReportService2005.wsdl"/>
 
   <target name="clean" description="Remove all generated files.">
