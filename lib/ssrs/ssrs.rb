@@ -1,6 +1,7 @@
 module SSRS
   AUTO_UPLOAD_PATH='/Auto'
   PREFIX_KEY='prefix'
+  WSDL_KEY='wsdl_path'
 
   @@reports_dir = BASE_APP_DIR + '/reports'
 
@@ -55,6 +56,7 @@ module SSRS
   def self.ssrs_config
     config = SSRS.config_for_env("ssrs", DB_ENV)
     raise "Missing prefix for ssrs_development database config" unless config[PREFIX_KEY] || DB_ENV == 'production'
+    raise "Missing wsdl location for ssrs_development database config" unless config[WSDL_KEY]
     config[PREFIX_KEY] ||= ''
     config
   end
