@@ -30,7 +30,7 @@
   </target>
 
   <target name="package" depends="compile">
-    <jar file="target/ssrs-api.jar" basedir="target/classes"/>
+    <jar file="../lib/ssrs/ssrs-api.jar" basedir="target/classes"/>
   </target>
 
   <target name="rebuild" depends="clean, package"/>
