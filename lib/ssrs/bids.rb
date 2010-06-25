@@ -9,20 +9,22 @@ module SSRS
     private
     
     def self.generate_project_files
-      SSRS.upload_dirs.each do |dir|
-        project_name = dir.gsub('/', '_')
-        filename = "#{SSRS.projects_dir}/#{project_name}.rptproj"
-        SSRS.info("Generating Project #{project_name}")
+      SSRS::Config.upload_dirs.each do |upload_dir|
+        SSRS.info("Generating Project for #{upload_dir}")
+        actual_dir = File.expand_path("#{SSRS::Config.reports_dir}/#{upload_dir}")
+        filename = File.expand_path("#{SSRS::Config.projects_dir}/#{upload_dir[1,upload_dir.size].gsub('/', '_')}.rptproj")
+        project = SSRS::ReportProject.new(upload_dir, filename, actual_dir)
         File.open(filename, 'w') do |f|
-          SSRS::ReportProject.new(dir).write(f)
+          project.write(f)
         end
       end
     end
 
     def self.generate_data_sources
-      mkdir_p SSRS.projects_dir
-      SSRS.datasources.each do |ds|
-        filename = "#{SSRS.projects_dir}/#{ds.name}.rds"
+      FileUtils.rm_rf SSRS::Config.projects_dir
+      FileUtils.mkdir_p SSRS::Config.projects_dir
+      SSRS::Config.datasources.each do |ds|
+        filename = "#{SSRS::Config.projects_dir}/#{ds.name}.rds"
         SSRS.info("Generating DataSource #{ds.name}")
         File.open(filename, 'w') do |f|
           ds.write(f)

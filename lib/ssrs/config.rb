@@ -59,6 +59,11 @@ module SSRS
         @wsdl_path
       end
 
+      def report_target
+        load_ssrs_config
+        @report_target
+      end
+
       private
       
       def upload_path(filename)
@@ -71,6 +76,7 @@ module SSRS
           config_key = "ssrs_#{DB_ENV}"
           config = config_for_key(config_key)
           @wsdl_path = expect_config_element(config_key, config, 'wsdl_path').to_s
+          @report_target = expect_config_element(config_key, config, 'report_target').to_s
           @upload_prefix = expect_config_element(config_key, config, 'prefix').to_s
         end
       end
