@@ -22,7 +22,7 @@ module SSRS
       document = self.document
       REXML::XPath.each(document.root, "//Report/DataSources/DataSource/DataSourceReference") do |element|
         text_node = element.get_text
-        text_node.value = "#{SSRS.upload_prefix}/#{DataSource::BASE_PATH}/#{text_node.value}"
+        text_node.value = "#{SSRS::Config.upload_prefix}/#{DataSource::BASE_PATH}/#{text_node.value}"
       end
       document
     end
