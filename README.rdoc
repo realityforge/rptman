@@ -11,3 +11,7 @@ gems installation steps but typically it is
 
   jgem install rptman
 
+== Credit
+
+The gem was initially developed as by StockSoftware for use in the Department
+of Sustainability and Environment, Victoria, Australia.
