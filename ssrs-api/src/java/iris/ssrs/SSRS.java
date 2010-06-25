@@ -22,7 +22,7 @@ import javax.xml.namespace.QName;
 @SuppressWarnings( { "UnusedDeclaration" } )
 public class SSRS
 {
-  public static final Logger LOG = Logger.getLogger( SSRS.class.getName() );
+  private static final Logger LOG = Logger.getLogger( SSRS.class.getName() );
   private static final String PATH_SEPARATOR = "/";
 
   private final ReportingService2005Soap _soap;
@@ -53,6 +53,24 @@ public class SSRS
   }
 
   /**
+   * Log a info message.
+   * Used from ruby code. (Not using LOG directly as overloading confuses ruby)
+   */
+  public static void info( final String message )
+  {
+    LOG.info( message );
+  }
+
+  /**
+   * Log a warning message.
+   * Used from ruby code. (Not using LOG directly as overloading confuses ruby)
+   */
+  public static void warning( final String message )
+  {
+    LOG.warning( message );
+  }
+
+  /**
    * Create a data source at path with a specific connection string.
    */
   public void createSQLDataSource( final String path, final String connectionString )
@@ -73,7 +91,7 @@ public class SSRS
    */
   public void createDataSource( final String path, final DataSourceDefinition definition )
   {
-    LOG.info( "Creating DataSource " + path + " with CS " + definition.getConnectString() );
+    info( "Creating DataSource " + path + " with CS " + definition.getConnectString() );
     final String physicalName = toPhysicalFileName( path );
     final String reportName = filenameFromPath( physicalName );
     final String reportDir = dirname( physicalName );
@@ -95,7 +113,7 @@ public class SSRS
    */
   public void createReport( final String path, final File file )
   {
-    LOG.info( "Creating Report " + path + " from file " + file.getAbsolutePath() );
+    info( "Creating Report " + path + " from file " + file.getAbsolutePath() );
     final String physicalName = toPhysicalFileName( path );
     LOG.fine( "Creating Report with symbolic item " + path + " as " + physicalName );
     final ItemTypeEnum type = _soap.getItemType( physicalName );
@@ -127,7 +145,7 @@ public class SSRS
    */
   public void delete( final String path )
   {
-    LOG.info( "Deleting item " + path );
+    info( "Deleting item " + path );
     final String physicalName = toPhysicalFileName( path );
     LOG.fine( "Deleting symbolic item " + path + " as " + physicalName );
     final ItemTypeEnum type = _soap.getItemType( physicalName );
@@ -147,7 +165,7 @@ public class SSRS
    */
   public void mkdir( final String filePath )
   {
-    LOG.info( "Creating dir " + filePath );
+    info( "Creating dir " + filePath );
     final String physicalName = toPhysicalFileName( filePath );
     LOG.fine( "Creating symbolic dir " + filePath + " as " + physicalName );
     final StringBuilder path = new StringBuilder();
@@ -230,12 +248,12 @@ public class SSRS
   {
     for ( final Warning warning : warnings.getWarning() )
     {
-      LOG.warning( "Action '" + message + "' resulted in warning " +
-                   " Code=" + warning.getCode() +
-                   " ObjectName=" + warning.getObjectName() +
-                   " ObjectType=" + warning.getObjectType() +
-                   " Severity=" + warning.getSeverity() +
-                   " Message=" + warning.getMessage() );
+      warning( "Action '" + message + "' resulted in warning " +
+               " Code=" + warning.getCode() +
+               " ObjectName=" + warning.getObjectName() +
+               " ObjectType=" + warning.getObjectType() +
+               " Severity=" + warning.getSeverity() +
+               " Message=" + warning.getMessage() );
     }
   }
 
