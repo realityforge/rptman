@@ -1,9 +1,10 @@
 module SSRS
   class Report
-    attr_accessor :filename
+    attr_reader :name
+    attr_reader :filename
 
-    def initialize(filename)
-      @filename = filename
+    def initialize(name, filename)
+      @name, @filename = name, filename
     end
 
     def generate_upload_version

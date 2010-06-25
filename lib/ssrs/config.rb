@@ -36,7 +36,11 @@ module SSRS
       end
 
       def reports
-        @reports = Dir.glob("#{self.reports_dir}/**/*.rdl").collect { |file| SSRS::Report.new(file) } unless @reports
+        unless @reports
+          @reports = Dir.glob("#{self.reports_dir}/**/*.rdl").collect do |filename|
+            SSRS::Report.new(upload_path(filename), filename)
+          end
+        end
         return @reports
       end
 
@@ -54,11 +58,12 @@ module SSRS
         @wsdl_path
       end
 
-      def upload_path(filename)
-        filename.gsub(Regexp.escape(self.reports_dir), '')
-      end
-
       private
+      
+      def upload_path(filename)
+        symbolic_path = filename.gsub(Regexp.escape(reports_dir), '')
+        return "#{File.dirname(symbolic_path)}/#{File.basename(symbolic_path,'.rdl')}"
+      end
 
       def load_ssrs_config
         unless @upload_prefix
