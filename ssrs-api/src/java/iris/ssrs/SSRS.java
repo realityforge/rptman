@@ -13,7 +13,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import javax.xml.namespace.QName;
 
 /**
@@ -50,6 +55,26 @@ public class SSRS
                  "ReportingService2005" );
     final ReportingService2005 service = new ReportingService2005( wsdlURL, qName );
     _soap = service.getReportingService2005Soap();
+  }
+
+  /**
+   * A helper method to configure the logging.
+   * Used from jruby.
+   */
+  public static void setupLogger( final boolean verbose )
+  {
+    LOG.setUseParentHandlers( false );
+    LOG.setLevel( verbose ? Level.ALL : Level.INFO );
+    final ConsoleHandler handler = new ConsoleHandler();
+    handler.setFormatter( new Formatter()
+    {
+      @Override
+      public String format( final LogRecord record )
+      {
+        return record.getMessage() + "\n";
+      }
+    } );
+    LOG.addHandler( handler );
   }
 
   /**

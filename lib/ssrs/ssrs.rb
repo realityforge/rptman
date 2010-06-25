@@ -3,3 +3,4 @@ module SSRS
     Java::IrisSSRS::SSRS.info(message)
   end
 end
+Java::IrisSSRS::SSRS.setupLogger(false)
