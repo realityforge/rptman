@@ -91,7 +91,7 @@ public class SSRS
    */
   public void createDataSource( final String path, final DataSourceDefinition definition )
   {
-    info( "Creating DataSource " + path + " with CS " + definition.getConnectString() );
+    info( "Creating DataSource " + path );
     final String physicalName = toPhysicalFileName( path );
     final String reportName = filenameFromPath( physicalName );
     final String reportDir = dirname( physicalName );
