@@ -3,14 +3,8 @@ module SSRS
     BASE_PATH = 'DataSources'
     attr_accessor :name, :host, :instance, :database, :datasource_id, :username, :password
 
-    def initialize(name, database_key)
+    def initialize(name)
       self.name = name
-      config = SSRS.config_for_env( database_key, DB_ENV )
-      self.host = config["host"]
-      self.instance = config["instance"]
-      self.database = config["database"]
-      self.username = config["username"]
-      self.password = config["password"]
       self.datasource_id = SSRS::UUID.create.to_s
     end
 
