@@ -13,8 +13,6 @@ Tool for managing SSRS reports
                         ['lib/ssrs/ssrs-api.jar','LICENSE', 'README.rdoc', 'CHANGELOG']
   spec.require_paths  = ['lib']
   spec.platform       = RUBY_PLATFORM[/java/]
-  spec.bindir         = 'bin'
-  spec.executable     = 'rptman'
 
   spec.has_rdoc         = false
 end
