@@ -138,7 +138,7 @@ public class SSRS
    */
   public void createReport( final String path, final File file )
   {
-    info( "Creating Report " + path + " from file " + file.getAbsolutePath() );
+    info( "Creating Report " + path );
     final String physicalName = toPhysicalFileName( path );
     LOG.fine( "Creating Report with symbolic item " + path + " as " + physicalName );
     final ItemTypeEnum type = _soap.getItemType( physicalName );
