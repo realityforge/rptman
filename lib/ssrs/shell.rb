@@ -33,6 +33,9 @@ module SSRS
       SSRS.info("\tUpload Prefix: #{SSRS::Config.upload_prefix}")
       SSRS.info("\tReport Target: #{SSRS::Config.report_target}")
       SSRS.info("")
+      if !generate_projects? && !upload_reports?
+        SSRS.info("Run with -h for help")
+      end
     end
 
     def self.parse_args
