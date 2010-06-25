@@ -7,7 +7,9 @@ Gem::Specification.new do |spec|
   spec.homepage       = "http://github.com/stocksoftware/rptman"
   spec.summary        = "Tool for managing SSRS reports"
   spec.description    = <<-TEXT
-Tool for managing SSRS reports
+This is a command line tool and suite of rake tasks for uploading SSRS
+reports to a server. The tool can also generate project files for
+the "SQL Server Business Intelligence Development Studio".
   TEXT
   spec.files          = Dir['{lib}/**/*', '*.gemspec'] +
                         ['lib/ssrs/ssrs-api.jar','LICENSE', 'README.rdoc', 'CHANGELOG']
