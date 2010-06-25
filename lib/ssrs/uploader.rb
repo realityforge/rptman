@@ -19,8 +19,9 @@ module SSRS
     end
 
     def self.upload_reports(ssrs_soap_port)
-      SSRS::Config.upload_dirs.each do |report_dir|
-        upload_dir = report_dir.split('/').delete_if { |path| path == "" }.first
+      top_level_upload_dirs =
+        SSRS::Config.upload_dirs.collect { |d| d.split('/').delete_if { |p| p == "" }.first }.sort.uniq
+      top_level_upload_dirs.each do |upload_dir|
         ssrs_soap_port.delete(upload_dir)
       end
       SSRS::Config.reports.each do |report|
