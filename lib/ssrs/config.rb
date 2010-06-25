@@ -1,6 +1,25 @@
 module SSRS
   class Config
+    class Server
+      attr_reader :wsdl_path
+      attr_reader :report_target
+      attr_reader :upload_prefix
+
+      def initialize(wsdl_path, report_target, upload_prefix)
+        @wsdl_path = wsdl_path
+        @report_target = report_target
+        @upload_prefix = upload_prefix
+      end
+    end
+
     class << self
+      attr_writer :environment
+
+      def environment
+        return 'development' unless @environment
+        @environment
+      end
+
       # config_file is where the yaml config file is located
       attr_writer :config_filename
 
@@ -50,18 +69,19 @@ module SSRS
       end
 
       def upload_prefix
-        load_ssrs_config
-        @upload_prefix
+        current_ssrs_config.upload_prefix
       end
 
       def wsdl_path
-        load_ssrs_config
-        @wsdl_path
+        current_ssrs_config.wsdl_path
       end
 
       def report_target
-        load_ssrs_config
-        @report_target
+        current_ssrs_config.report_target
+      end
+
+      def server_config(env_key)
+        load_ssrs_config(env_key)
       end
 
       private
@@ -71,18 +91,21 @@ module SSRS
         return "#{File.dirname(symbolic_path)}/#{File.basename(symbolic_path,'.rdl')}"
       end
 
-      def load_ssrs_config
-        unless @upload_prefix
-          config_key = "ssrs_#{DB_ENV}"
-          config = config_for_key(config_key)
-          @wsdl_path = expect_config_element(config_key, config, 'wsdl_path').to_s
-          @report_target = expect_config_element(config_key, config, 'report_target').to_s
-          @upload_prefix = expect_config_element(config_key, config, 'prefix').to_s
-        end
+      def current_ssrs_config
+        @server ||= load_ssrs_config(environment)
+      end
+
+      def load_ssrs_config(env_key)
+        config_key = "ssrs_#{env_key}"
+        config = config_for_key(config_key)
+        wsdl_path = expect_config_element(config_key, config, 'wsdl_path').to_s
+        report_target = expect_config_element(config_key, config, 'report_target').to_s
+        upload_prefix = expect_config_element(config_key, config, 'prefix').to_s
+        SSRS::Config::Server.new(wsdl_path, report_target, upload_prefix)
       end
 
       def configure_datasource(data_source, database_key)
-        config_key = "#{database_key}_#{DB_ENV}"
+        config_key = "#{database_key}_#{environment}"
         config = config_for_key(config_key)
 
         data_source.host = expect_config_element(config_key, config, 'host')

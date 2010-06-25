@@ -37,34 +37,36 @@ XML
 XML
       end
 
-      prefix = SSRS::Config.upload_prefix
       file.write <<XML
   </Reports>
   <Configurations>
-    <Configuration>
-      <Name>Debug</Name>
-      <Platform>Win32</Platform>
-      <Options>
-        <TargetServerURL>#{SSRS::Config.report_target}</TargetServerURL>
-        <TargetFolder>#{prefix}#{self.name}</TargetFolder>
-        <TargetDataSourceFolder>#{prefix}/#{DataSource::BASE_PATH}</TargetDataSourceFolder>
-      </Options>
-    </Configuration>
-    <Configuration>
-      <Name>DebugLocal</Name>
-      <Platform>Win32</Platform>
-      <Options>
-        <TargetServerURL>#{SSRS::Config.report_target}</TargetServerURL>
-        <TargetFolder>#{prefix}/#{self.name}</TargetFolder>
-        <TargetDataSourceFolder>#{prefix}/#{DataSource::BASE_PATH}</TargetDataSourceFolder>
-      </Options>
-    </Configuration>
+XML
+      development = SSRS::Config.server_config("development")
+      file.write gen_configuration("Debug", development)
+      file.write gen_configuration("DebugLocal", development)
+      production = SSRS::Config.server_config("production") rescue nil
+      file.write gen_configuration("Release", production) if production
+      file.write <<XML
   </Configurations>
 </Project>
 XML
     end
 
     private
+
+    def gen_configuration(name, server_config)
+      <<XML
+    <Configuration>
+      <Name>#{name}</Name>
+      <Platform>Win32</Platform>
+      <Options>
+        <TargetServerURL>#{server_config.report_target}</TargetServerURL>
+        <TargetFolder>#{server_config.upload_prefix}#{self.name}</TargetFolder>
+        <TargetDataSourceFolder>#{server_config.upload_prefix}/#{DataSource::BASE_PATH}</TargetDataSourceFolder>
+      </Options>
+    </Configuration>
+XML
+    end
 
     # Convert the given absolute path into a path
     # relative to the second given absolute path.
