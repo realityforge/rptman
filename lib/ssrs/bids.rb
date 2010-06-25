@@ -9,8 +9,8 @@ module SSRS
     private
     
     def self.generate_project_files
-      SSRS.report_dirs.each do |dir|
-        project_name = SSRS.upload_path(dir).gsub('/', '_')
+      SSRS.upload_dirs.each do |dir|
+        project_name = dir.gsub('/', '_')
         filename = "#{SSRS.projects_dir}/#{project_name}.rptproj"
         SSRS.info("Generating Project #{project_name}")
         File.open(filename, 'w') do |f|

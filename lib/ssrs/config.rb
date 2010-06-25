@@ -44,8 +44,9 @@ module SSRS
         return @reports
       end
 
-      def report_dirs
-        self.reports.collect {|report| File.dirname(report.filename)}.sort.uniq
+      # Return list of dirs uploaded
+      def upload_dirs
+        self.reports.collect {|report| File.dirname(report.name)}.sort.uniq
       end
 
       def upload_prefix
