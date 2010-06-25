@@ -7,9 +7,62 @@ the "SQL Server Business Intelligence Development Studio".
 == Installation
 
 The extension is packaged as a jruby gem named "rptman", consult the ruby
-gems installation steps but typically it is 
+gems installation steps but typically it is
 
   jgem install rptman
+
+== Basic Overview
+
+Reports are stored in sub-directories of a <report-dir>. The filename
+of the report must end with ".rdl". The directory hierarchy on the local
+file system is mirrored on the SSRS server during an upload. So if a file
+exists with the name
+
+  <report-dir>/IRIS/Coordination/Tour Of Duty Report.rdl
+
+It will be uploaded to the SSRS server with the path
+
+  /IRIS/Coordination/Tour Of Duty Report
+
+Every top level directory on the local filesystem that includes a report
+file is deleted when it during the upload process. So in the above scenario
+the /IRIS directory on SSRS server is delted prior to uploading the
+directory. It is assumed that every report in a particular hierarhcy is
+stored in one location.
+
+The tool can also create data source definitions and these are placed in a
+directory named "/DataSources".
+
+The gem supports prefixing all paths with when uploading to the SSRS server.
+It is possible to prefix all reports managed by this tool with /Auto so as
+to distinguish them from reports uploaded through other means. If multiple
+people are working of the same SSRS instance it is also possible to decorate
+the prefix with a username or environment. (i.e. /Auto/PD42/DEV)
+
+The configuration data for determing which SSRS instance and prefix to use
+is in a yaml file with a format described below. The easiest way to use the
+tool is to create a ruby script such as the following;
+
+  gem 'rptman'
+
+  # The configuration file
+  SSRS::Config.config_filename = "database.yml"
+
+  # The directory in which the reports are stored
+  SSRS::Config.reports_dir = "reports"
+
+  # Define a data source named IRIS_CENTRAL that has
+  # configration data stored under the key 'central'
+  SSRS::Config.define_datasource('IRIS_CENTRAL','central')
+
+  # actually run the tool
+  SSRS::Shell.run
+
+The script can then be run with a -h parameter to see the various options. 
+
+=== Configuration Format
+
+TODO
 
 == Credit
 
