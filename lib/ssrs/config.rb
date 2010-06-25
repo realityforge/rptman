@@ -1,12 +1,10 @@
 module SSRS
   class Config
     class Server
-      attr_reader :wsdl_path
       attr_reader :report_target
       attr_reader :upload_prefix
 
-      def initialize(wsdl_path, report_target, upload_prefix)
-        @wsdl_path = wsdl_path
+      def initialize(report_target, upload_prefix)
         @report_target = report_target
         @upload_prefix = upload_prefix
       end
@@ -73,7 +71,7 @@ module SSRS
       end
 
       def wsdl_path
-        current_ssrs_config.wsdl_path
+        "#{report_target}/ReportService2005.asmx"
       end
 
       def report_target
@@ -98,10 +96,9 @@ module SSRS
       def load_ssrs_config(env_key)
         config_key = "ssrs_#{env_key}"
         config = config_for_key(config_key)
-        wsdl_path = expect_config_element(config_key, config, 'wsdl_path').to_s
         report_target = expect_config_element(config_key, config, 'report_target').to_s
         upload_prefix = expect_config_element(config_key, config, 'prefix').to_s
-        SSRS::Config::Server.new(wsdl_path, report_target, upload_prefix)
+        SSRS::Config::Server.new(report_target, upload_prefix)
       end
 
       def configure_datasource(data_source, database_key)
