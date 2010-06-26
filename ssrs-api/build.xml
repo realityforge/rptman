@@ -8,7 +8,7 @@
 
   <target name="generate">
     <mkdir dir="generated/java"/>
-    <exec executable="wsimport.exe" failonerror="true">
+    <exec executable="wsimport" failonerror="true">
       <arg value="${report-service.wsdl}"/>
       <arg value="-Xnocompile"/>
       <arg value="-wsdllocation"/>
