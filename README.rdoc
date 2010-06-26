@@ -1,6 +1,6 @@
 = rptman
 
-This is a command line tool and suite of rake tasks for uploading SSRS
+This tool includes code and a suite of rake tasks for uploading SSRS
 reports to a server. The tool can also generate project files for
 the "SQL Server Business Intelligence Development Studio". 
 
