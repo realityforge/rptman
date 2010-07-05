@@ -45,6 +45,8 @@ tool is to create a ruby script such as the following;
 
   gem 'rptman'
 
+  require 'rptman'
+
   # The configuration file
   SSRS::Config.config_filename = "database.yml"
 
