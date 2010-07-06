@@ -103,5 +103,5 @@ Here is an example configuration file:
 
 == Credit
 
-The gem was initially developed as by StockSoftware for use in the Department
+The gem was initially developed by StockSoftware for use in the Department
 of Sustainability and Environment, Victoria, Australia.
