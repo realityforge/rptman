@@ -101,6 +101,18 @@ Here is an example configuration file:
     host: sqlserver.example.com
     instance: myinstance
 
+=== Project Configurations
+
+The "SQL Server Business Intelligence Development Studio" allows each project to
+have zero or more "Configurations". These configurations roughly correspond to the
+concept of environments in the above configuration.
+
+By default the tool creates a "Debug" and "DebugLocal" configuration that use the
+settings from the "development" environment. The "DebugLocal" configuration is
+differentiated in that it builds and deploys the report by default. The tool will
+also create a "Release" configuration that use the settings from the "production"
+environment if a "production" environment exists in the configuration file.
+
 == Credit
 
 The gem was initially developed by StockSoftware for use in the Department
