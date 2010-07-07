@@ -24,10 +24,10 @@ It will be uploaded to the SSRS server with the path
 
   /IRIS/Coordination/Tour Of Duty Report
 
-Every top level directory on the local filesystem that includes a report
+Every top level directory on the local file system that includes a report
 file is deleted when it during the upload process. So in the above scenario
-the /IRIS directory on SSRS server is delted prior to uploading the
-directory. It is assumed that every report in a particular hierarhcy is
+the /IRIS directory on SSRS server is deleted prior to uploading the
+directory. It is assumed that every report in a particular hierarchy is
 stored in one location.
 
 The tool can also create data source definitions and these are placed in a
@@ -39,7 +39,7 @@ to distinguish them from reports uploaded through other means. If multiple
 people are working of the same SSRS instance it is also possible to decorate
 the prefix with a username or environment. (i.e. /Auto/PD42/DEV)
 
-The configuration data for determing which SSRS instance and prefix to use
+The configuration data for determining which SSRS instance and prefix to use
 is in a yaml file with a format described below. The easiest way to use the
 tool is to create a ruby script such as the following;
 
@@ -66,7 +66,7 @@ The script can then be run with a -h parameter to see the various options.
 
 The configuration is stored in a yaml file. The configuration file format
 allows for multiple "environments" (a.k.a. configuration) in one file. Most
-configuration files will have "development" and "production" envioronments.
+configuration files will have "development" and "production" environments.
 There must be one section for each SQL Server or SSRS instance. Each section
 is named "<key>_<environment>" where the key for SSRS servers is "ssrs". The
 key for SQL Server instances must correspond to the key specified in the
@@ -74,7 +74,7 @@ invocation of "SSRS::Config.define_datasource(<name>,<key>)" above.
 
 The SSRS server must specify the report_target and prefix keys. The SQL Server
 instances must specify the database and host keys and may optionally specify
-the username, password and isntance keys. If username and password are not
+the username, password and instance keys. If username and password are not
 specified then integrated security is used.
 
 Here is an example configuration file:
