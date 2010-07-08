@@ -1,3 +1,5 @@
+require File.expand_path("#{File.dirname(__FILE__)}/../rptman.rb")
+
 namespace :rptman do
   namespace :vs_projects do
     desc "Generate MS VS projects for each report dir"
