@@ -102,7 +102,7 @@ module SSRS
       end
 
       def configure_datasource(data_source, database_key)
-        config_key = "#{database_key}_#{environment}"
+        config_key = database_key.nil? ? environment : "#{database_key}_#{environment}"
         config = config_for_key(config_key)
 
         data_source.host = expect_config_element(config_key, config, 'host')

@@ -70,7 +70,8 @@ configuration files will have "development" and "production" environments.
 There must be one section for each SQL Server or SSRS instance. Each section
 is named "<key>_<environment>" where the key for SSRS servers is "ssrs". The
 key for SQL Server instances must correspond to the key specified in the
-invocation of "SSRS::Config.define_datasource(<name>,<key>)" above.
+invocation of "SSRS::Config.define_datasource(<name>,<key>)" above. If nil is
+supplied as the <key> parameter then a section named "<environment>" is used.
 
 The SSRS server must specify the report_target and prefix keys. The SQL Server
 instances must specify the database and host keys and may optionally specify
