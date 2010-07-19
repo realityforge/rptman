@@ -29,7 +29,7 @@ end
 
 module SSRS
 # Pure ruby UUID generator, which is compatible with RFC4122
-UUID = Struct.new "UUID", :raw_bytes
+UUID = Struct.new "SSRS::UUID", :raw_bytes
 class UUID
 	private_class_method :new
 
