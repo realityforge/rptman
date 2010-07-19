@@ -1,4 +1,4 @@
-require File.expand_path("#{File.dirname(__FILE__)}/../rptman.rb")
+require 'rptman'
 
 namespace :rptman do
   namespace :vs_projects do
