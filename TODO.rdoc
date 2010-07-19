@@ -1,11 +1,5 @@
 == TODO
 
-=== Deferred Loading of Data Sources
-
-Datasource definitions are loaded from the config file and verified when they are
-defined. This should be changed so that they are loaded the first time
-SSRS::Config.datasources is invoked.
-
 === Declared Configurations
 
 Currently the tool guesses the configurations and attempts to map them to

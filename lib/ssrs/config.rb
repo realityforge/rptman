@@ -43,13 +43,20 @@ module SSRS
       end
 
       def datasources
+        datasources_map.each_pair do |k,datasource|
+          if datasource.is_a? Proc
+            datasources_map[k] = datasource.call
+          end
+        end
         datasources_map.values
       end
 
       def define_datasource(name, database_key)
-        data_source = SSRS::DataSource.new(name)
-        configure_datasource(data_source, database_key)
-        datasources_map[name] = data_source
+        datasources_map[name] = Proc.new do
+          data_source = SSRS::DataSource.new(name)
+          configure_datasource(data_source, database_key)
+          data_source
+        end
       end
 
       def reports

@@ -1,5 +1,6 @@
 0.0.2 (Pending)
 * Update example in documentation to require 'rptman'
+* Defer the loading of configuration file until SSRS::Config.datasources is invoked
 
 0.0.1 (June 26th, 2010)
 * Initial Release
