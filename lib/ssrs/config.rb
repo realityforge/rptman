@@ -3,10 +3,16 @@ module SSRS
     class Server
       attr_reader :report_target
       attr_reader :upload_prefix
+      attr_reader :domain
+      attr_reader :username
+      attr_reader :password
 
-      def initialize(report_target, upload_prefix)
+      def initialize(report_target, upload_prefix, domain, username, password)
         @report_target = report_target
         @upload_prefix = upload_prefix
+        @domain = domain
+        @username = username
+        @password = password
       end
     end
 
@@ -105,7 +111,7 @@ module SSRS
         config = config_for_key(config_key)
         report_target = expect_config_element(config_key, config, 'report_target').to_s
         upload_prefix = expect_config_element(config_key, config, 'prefix').to_s
-        SSRS::Config::Server.new(report_target, upload_prefix)
+        SSRS::Config::Server.new(report_target, upload_prefix, config['domain'], config['username'], config['password'])
       end
 
       def configure_datasource(data_source, database_key)
