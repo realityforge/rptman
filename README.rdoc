@@ -94,6 +94,9 @@ Here is an example configuration file:
   ssrs_production:
     report_target: http://ssrs.example.com/SSRS01_WS
     prefix: /Auto
+    domain: example.com
+    username: MyUsername
+    password: MyPassword
 
   central_production:
     database: IRIS_CENTRAL
