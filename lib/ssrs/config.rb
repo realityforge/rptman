@@ -79,6 +79,18 @@ module SSRS
         self.reports.collect {|report| File.dirname(report.name)}.sort.uniq
       end
 
+      def domain
+        current_ssrs_config.domain
+      end
+
+      def username
+        current_ssrs_config.username
+      end
+
+      def password
+        current_ssrs_config.password
+      end
+
       def upload_prefix
         current_ssrs_config.upload_prefix
       end

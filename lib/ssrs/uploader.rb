@@ -2,10 +2,10 @@ module SSRS
   class Uploader
     def self.upload
       # If domain has been specified then assume NTLM
-      if SSRS::Config.current_ssrs_config.domain
-        Java::IrisSSRS::NTLMAuthenticator.install(SSRS::Config.current_ssrs_config.domain,
-                                                  SSRS::Config.current_ssrs_config.username,
-                                                  SSRS::Config.current_ssrs_config.password)
+      if SSRS::Config.domain
+        Java::IrisSSRS::NTLMAuthenticator.install(SSRS::Config.domain,
+                                                  SSRS::Config.username,
+                                                  SSRS::Config.password)
       end
       ssrs_soap_port = Java::IrisSSRS::SSRS.new(Java::JavaNet.URL.new(SSRS::Config.wsdl_path),
                                                 SSRS::Config.upload_prefix)
