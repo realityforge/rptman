@@ -1,3 +1,10 @@
+# Need to explicitly set the encoding as we know all
+# the reports are in UTF-8. This is global and not
+# goodness.
+if RUBY_VERSION =~ /1.9/
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
+end
 module SSRS
   class Report
     attr_reader :name
