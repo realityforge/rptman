@@ -2,7 +2,7 @@ module SSRS
   class Uploader
     def self.upload
       # If domain has been specified then assume NTLM
-      if SSRS::Config.domain
+      if SSRS::Config.username
         Java::IrisSSRS::NTLMAuthenticator.install(SSRS::Config.domain,
                                                   SSRS::Config.username,
                                                   SSRS::Config.password)
