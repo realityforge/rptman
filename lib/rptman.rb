@@ -1,9 +1,9 @@
 require 'erb'
 require 'yaml'
 require 'optparse'
-require 'securerandom'
 
 require 'ssrs/ssrs-api.jar'
+require 'ssrs/UUID'
 require 'ssrs/core'
 require 'ssrs/config'
 require 'ssrs/datasource'

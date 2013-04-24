@@ -5,7 +5,7 @@ module SSRS
 
     def initialize(name)
       self.name = name
-      self.datasource_id = SecureRandom.uuid.to_s
+      self.datasource_id = SSRS::UUID.create.to_s
     end
 
     def host_spec
