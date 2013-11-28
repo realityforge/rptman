@@ -3,11 +3,11 @@ module SSRS
     def self.upload
       # If domain has been specified then assume NTLM
       if SSRS::Config.username
-        Java::IrisSSRS::NTLMAuthenticator.install(SSRS::Config.domain,
+        Java.iris.ssrs.NTLMAuthenticator.install(SSRS::Config.domain,
                                                   SSRS::Config.username,
                                                   SSRS::Config.password)
       end
-      ssrs_soap_port = Java::IrisSSRS::SSRS.new(Java::JavaNet.URL.new(SSRS::Config.wsdl_path),
+      ssrs_soap_port = Java.iris.ssrs.SSRS.new(Java.java.net.URL.new(SSRS::Config.wsdl_path),
                                                 SSRS::Config.upload_prefix)
       self.upload_datasources(ssrs_soap_port)
       self.upload_reports(ssrs_soap_port)
@@ -31,7 +31,7 @@ module SSRS
       end
       SSRS::Config.reports.each do |report|
         ssrs_soap_port.mkdir(File.dirname(report.name))
-        ssrs_soap_port.createReport(report.name, Java::JavaIo.File.new(report.generate_upload_version))
+        ssrs_soap_port.createReport(report.name, Java.java.io.File.new(report.generate_upload_version))
       end
     end
   end
