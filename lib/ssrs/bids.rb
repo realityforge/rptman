@@ -7,7 +7,7 @@ module SSRS
     end
 
     private
-    
+
     def self.generate_project_files
       SSRS::Config.upload_dirs.each do |upload_dir|
         SSRS.info("Generating Project for #{upload_dir}")
@@ -33,3 +33,4 @@ module SSRS
     end
   end
 end
+

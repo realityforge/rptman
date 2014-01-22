@@ -37,5 +37,6 @@ module SSRS
 </RptDataSource>
 XML
     end
-  end  
+  end
 end
+
