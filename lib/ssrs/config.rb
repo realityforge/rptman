@@ -74,7 +74,7 @@ module SSRS
         datasources_map.values
       end
 
-      def define_datasource(name, database_key)
+      def define_datasource(name, database_key = nil)
         datasources_map[name] = Proc.new do
           data_source = SSRS::DataSource.new(name)
           configure_datasource(data_source, database_key)
