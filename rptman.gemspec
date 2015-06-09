@@ -4,8 +4,8 @@ Gem::Specification.new do |spec|
   spec.authors        = ['Peter Donald']
   spec.email          = ["peter@realityforge.org"]
 
-  spec.homepage       = "http://github.com/stocksoftware/rptman"
-  spec.summary        = "Tool for managing SSRS reports"
+  spec.homepage       = 'http://github.com/stocksoftware/rptman'
+  spec.summary        = 'Tool for managing SSRS reports'
   spec.description    = <<-TEXT
 This tool includes code and a suite of rake tasks for uploading SSRS
 reports to a server. The tool can also generate project files for
