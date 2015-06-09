@@ -4,6 +4,7 @@ require 'optparse'
 
 require 'ssrs/ssrs-api.jar'
 require 'ssrs/UUID'
+require 'ssrs/version'
 require 'ssrs/core'
 require 'ssrs/config'
 require 'ssrs/datasource'
