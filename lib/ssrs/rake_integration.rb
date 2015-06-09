@@ -32,6 +32,8 @@ module SSRS #nodoc
           FileUtils.rm_rf(Dir["#{projects_dir}/**/*.rdl.data"])
         end
 
+        task '::clean' => "#{SSRS::Config.task_prefix}:vs_projects:clean"
+
         desc 'Upload reports to SSRS server'
         task "#{SSRS::Config.task_prefix}:ssrs:upload" do
           SSRS::Uploader.upload
