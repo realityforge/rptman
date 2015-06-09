@@ -17,6 +17,17 @@ module SSRS
     end
 
     class << self
+      attr_writer :base_directory
+
+      def base_directory
+        return @base_directory unless @base_directory.nil?
+        if defined?(::Buildr)
+          File.dirname(::Buildr.application.buildfile.to_s)
+        else
+          '.'
+        end
+      end
+
       attr_writer :environment
 
       def environment
@@ -67,7 +78,8 @@ module SSRS
 
       def reports
         unless @reports
-          @reports = Dir.glob("#{self.reports_dir}/**/*.rdl").collect do |filename|
+          reports_dir = File.expand_path(self.reports_dir, self.base_directory)
+          @reports = Dir.glob("#{reports_dir}/**/*.rdl").collect do |filename|
             SSRS::Report.new(upload_path(filename), filename)
           end
         end
@@ -110,6 +122,7 @@ module SSRS
       private
 
       def upload_path(filename)
+        reports_dir = File.expand_path(self.reports_dir, self.base_directory)
         symbolic_path = filename.gsub(Regexp.new(Regexp.escape(reports_dir)), '')
         return "#{File.dirname(symbolic_path)}/#{File.basename(symbolic_path,'.rdl')}"
       end
@@ -150,8 +163,9 @@ module SSRS
 
       def config_data
         unless @config_data
-          raise "Unable to locate config file #{self.config_filename}" unless File.exist?(self.config_filename)
-          @config_data = ::YAML::load(ERB.new(IO.read(self.config_filename)).result)
+          filename = File.expand_path(self.config_filename, self.base_directory)
+          raise "Unable to locate config file #{filename}" unless File.exist?(filename)
+          @config_data = ::YAML::load(ERB.new(IO.read(filename)).result)
         end
         @config_data
       end
