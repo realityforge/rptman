@@ -108,7 +108,7 @@ module SSRS
       end
 
       private
-      
+
       def upload_path(filename)
         symbolic_path = filename.gsub(Regexp.new(Regexp.escape(reports_dir)), '')
         return "#{File.dirname(symbolic_path)}/#{File.basename(symbolic_path,'.rdl')}"
