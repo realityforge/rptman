@@ -9,11 +9,6 @@ should be updated so that the user can configure the mapping between
 configurations and keys used in the config file and the options for configuration
 (i.e. Just build or build and deploy).
 
-== Define Rake library rather than tasks
-
-Doing it this way would allow the user to decide whether they are going to define
-all the tasks (ie vs support, ssrs upload, individual root upload).
-
 == Make it possible to overide the set of root paths that are updated
 
 Useful if you want to only update certain subtrees with different rake tasks.
