@@ -121,4 +121,3 @@ environment if a "production" environment exists in the configuration file.
 
 The gem was initially developed by StockSoftware for use in the Department
 of Sustainability and Environment, Victoria, Australia.
-
