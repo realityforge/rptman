@@ -12,6 +12,6 @@
 # limitations under the License.
 #
 
-class SSRS
+module SSRS
   VERSION = '0.5.0'
 end
