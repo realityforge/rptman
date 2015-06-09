@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name           = 'rptman'
-  spec.version        = `git describe`.strip.split('-').first
+  spec.version        = '0.5.0'
   spec.authors        = ['Peter Donald']
   spec.email          = ["peter@realityforge.org"]
 
