@@ -4,6 +4,7 @@ require 'optparse'
 require 'securerandom'
 
 Java.classpath << File.expand_path(File.dirname(__FILE__) + '/ssrs/ssrs-api.jar')
+require 'ssrs/version'
 require 'ssrs/core'
 require 'ssrs/config'
 require 'ssrs/datasource'
