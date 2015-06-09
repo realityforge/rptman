@@ -31,8 +31,8 @@ module SSRS
       attr_writer :environment
 
       def environment
-        return 'development' unless @environment
-        @environment
+        return @environment unless @environment.nil?
+        Object.const_defined?(:Dbt) ? Dbt::Config.environment : 'development'
       end
 
       attr_writer :task_prefix
@@ -45,16 +45,16 @@ module SSRS
       attr_writer :config_filename
 
       def config_filename
-        raise "config_filename not specified" unless @config_filename
-        @config_filename
+        return @config_filename unless @config_filename.nil?
+        return Dbt::Config.config_filename if Object.const_defined?(:Dbt)
+        raise 'config_filename not specified'
       end
 
       # reports_dir is where the report hierarchy is located
       attr_writer :reports_dir
 
       def reports_dir
-        raise "reports_dir not specified" unless @reports_dir
-        @reports_dir
+        @reports_dir.nil? ? 'database/reports' : @reports_dir
       end
 
       # projects_dir is where the VS projects are generated
