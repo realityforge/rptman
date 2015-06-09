@@ -37,6 +37,11 @@ module SSRS #nodoc
           SSRS::Uploader.upload
         end
 
+        desc 'Delete reports from the SSRS server'
+        task "#{SSRS::Config.task_prefix}:ssrs:delete" do
+          SSRS::Uploader.delete
+        end
+
         @@defined_init_tasks = true
       end
     end
