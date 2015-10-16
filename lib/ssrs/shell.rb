@@ -41,9 +41,10 @@ module SSRS
     def self.parse_args
       SSRS::Config.environment = "development"
 
+      Java.org.realityforge.sqlserver.ssrs.SSRS.setupLogger(false)
       optparse = OptionParser.new do |opts|
         opts.on('-v', '--verbose', 'Output more information') do
-          Java::IrisSSRS::SSRS.setupLogger(true)
+          Java.org.realityforge.sqlserver.ssrs.SSRS.setupLogger(true)
         end
 
         opts.on('-e', '--environment environment', 'Database environment to use') do |environment|

@@ -2,7 +2,6 @@ require 'erb'
 require 'yaml'
 require 'optparse'
 
-require 'ssrs/ssrs-api.jar'
 require 'ssrs/UUID'
 require 'ssrs/version'
 require 'ssrs/core'
