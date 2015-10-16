@@ -20,6 +20,12 @@ module SSRS #nodoc
     def self.define_basic_tasks
       unless @@defined_init_tasks
 
+        task "#{SSRS::Config.task_prefix}:setup" do
+          a = Buildr.artifact('org.realityforge.sqlserver.ssrs:ssrs:jar:1.0')
+          a.invoke
+          Java.classpath << a.to_s
+        end
+
         desc 'Generate MS VS projects for each report dir'
         task "#{SSRS::Config.task_prefix}:vs_projects:generate" do
           SSRS::BIDS.generate
@@ -35,12 +41,12 @@ module SSRS #nodoc
         task '::clean' => "#{SSRS::Config.task_prefix}:vs_projects:clean"
 
         desc 'Upload reports to SSRS server'
-        task "#{SSRS::Config.task_prefix}:ssrs:upload" do
+        task "#{SSRS::Config.task_prefix}:ssrs:upload" => ["#{SSRS::Config.task_prefix}:setup"] do
           SSRS::Uploader.upload
         end
 
         desc 'Delete reports from the SSRS server'
-        task "#{SSRS::Config.task_prefix}:ssrs:delete" do
+        task "#{SSRS::Config.task_prefix}:ssrs:delete" => ["#{SSRS::Config.task_prefix}:setup"] do
           SSRS::Uploader.delete
         end
 

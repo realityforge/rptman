@@ -1,5 +1,5 @@
 module SSRS
   def self.info(message)
-    Java.iris.ssrs.SSRS.info(message)
+    Java.org.realityforge.sqlserver.ssrs.SSRS.info(message)
   end
 end

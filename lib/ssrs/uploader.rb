@@ -17,11 +17,11 @@ module SSRS
     def self.create_port
       # If domain has been specified then assume NTLM
       if SSRS::Config.username
-        Java.iris.ssrs.NTLMAuthenticator.install(SSRS::Config.domain,
-                                                  SSRS::Config.username,
-                                                  SSRS::Config.password)
+        Java.org.realityforge.sqlserver.ssrs.NTLMAuthenticator.install(SSRS::Config.domain,
+                                                                       SSRS::Config.username,
+                                                                       SSRS::Config.password)
       end
-      Java.iris.ssrs.SSRS.new(Java.java.net.URL.new(SSRS::Config.wsdl_path), SSRS::Config.upload_prefix)
+      Java.org.realityforge.sqlserver.ssrs.SSRS.new(Java.java.net.URL.new(SSRS::Config.wsdl_path), SSRS::Config.upload_prefix)
     end
 
     def self.delete_datasources(ssrs_soap_port)

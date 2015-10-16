@@ -18,7 +18,7 @@ This tool includes code and a suite of rake tasks for uploading SSRS
 reports to a server. The tool can also generate project files for
 the "SQL Server Business Intelligence Development Studio".
   TEXT
-  s.files              = `git ls-files`.split("\n") + %w(lib/ssrs/ssrs-api.jar)
+  s.files              = `git ls-files`.split("\n")
   s.test_files         = `git ls-files -- {spec}/*`.split("\n")
   s.require_paths  = %w(lib)
 
