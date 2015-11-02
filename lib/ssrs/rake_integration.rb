@@ -27,7 +27,7 @@ module SSRS #nodoc
         end
 
         desc 'Generate MS VS projects for each report dir'
-        task "#{SSRS::Config.task_prefix}:vs_projects:generate" do
+        task "#{SSRS::Config.task_prefix}:vs_projects:generate" => ["#{SSRS::Config.task_prefix}:setup"] do
           SSRS::BIDS.generate
         end
 
