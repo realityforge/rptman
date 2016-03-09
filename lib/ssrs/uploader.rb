@@ -54,7 +54,7 @@ module SSRS
       end
       SSRS::Config.reports.each do |report|
         ssrs_soap_port.mkdir(File.dirname(report.name))
-        ssrs_soap_port.createReport(report.name, Java.java.io.File.new(report.generate_upload_version))
+        ssrs_soap_port.createReport(report.name, report.generate_upload_version)
       end
     end
   end

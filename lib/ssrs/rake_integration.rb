@@ -21,7 +21,7 @@ module SSRS #nodoc
       unless @@defined_init_tasks
 
         task "#{SSRS::Config.task_prefix}:setup" do
-          a = Buildr.artifact('org.realityforge.sqlserver.ssrs:ssrs:jar:1.0')
+          a = Buildr.artifact('org.realityforge.sqlserver.ssrs:ssrs:jar:1.1')
           a.invoke
           Java.classpath << a.to_s
         end
