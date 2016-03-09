@@ -35,12 +35,6 @@ module SSRS
       end
     end
 
-    def self.delete_datasources(ssrs_soap_port)
-      SSRS::Config.datasources.each do |ds|
-        ssrs_soap_port.delete(ds.symbolic_name)
-      end
-    end
-
     def self.upload_datasources(ssrs_soap_port)
       ssrs_soap_port.mkdir(SSRS::DataSource::BASE_PATH)
       SSRS::Config.datasources.each do |ds|
