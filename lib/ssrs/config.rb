@@ -50,6 +50,13 @@ module SSRS
         raise 'config_filename not specified'
       end
 
+      # The reports_dir where the reports are downloaded. Defaults to reports_dir.
+      attr_writer :download_reports_dir
+
+      def download_reports_dir
+        @download_reports_dir.nil? ? reports_dir : @download_reports_dir
+      end
+
       # reports_dir is where the report hierarchy is located
       attr_writer :reports_dir
 

@@ -21,7 +21,7 @@ module SSRS #nodoc
       unless @@defined_init_tasks
 
         task "#{SSRS::Config.task_prefix}:setup" do
-          a = Buildr.artifact('org.realityforge.sqlserver.ssrs:ssrs:jar:1.0')
+          a = Buildr.artifact('org.realityforge.sqlserver.ssrs:ssrs:jar:1.1')
           a.invoke
           $CLASSPATH << a.to_s
           Java::OrgRealityforgeSqlserverSsrs::SSRS.setupLogger(false)
@@ -49,6 +49,11 @@ module SSRS #nodoc
         desc 'Delete reports from the SSRS server'
         task "#{SSRS::Config.task_prefix}:ssrs:delete" => ["#{SSRS::Config.task_prefix}:setup"] do
           SSRS::Uploader.delete
+        end
+
+        desc 'Download reports from the SSRS server'
+        task "#{SSRS::Config.task_prefix}:ssrs:download" => ["#{SSRS::Config.task_prefix}:setup"] do
+          SSRS::Uploader.download
         end
 
         @@defined_init_tasks = true
