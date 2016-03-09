@@ -5,7 +5,11 @@ module SSRS
 
     def initialize(name)
       self.name = name
-      self.datasource_id = SSRS::UUID.create.to_s
+      self.datasource_id = if defined?(JRUBY_VERSION)
+        Java::JavaUtil::UUID.randomUUID.toString
+      else
+        Java.java.util.UUID.randomUUID.toString
+      end
     end
 
     def host_spec
@@ -17,10 +21,10 @@ module SSRS
     end
 
     def connection_string
-      auth_details = unless ( self.username || self.password )
-        'Integrated Security=SSPI'
-      else
+      auth_details = if self.username || self.password
         "User Id=#{self.username};Password=#{self.password}"
+      else
+        'Integrated Security=SSPI'
       end
       "Data Source=#{self.host_spec};Initial Catalog=#{self.database};#{auth_details};"
     end
