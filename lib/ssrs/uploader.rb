@@ -6,6 +6,11 @@ module SSRS
       self.upload_reports(ssrs_soap_port)
     end
 
+    def self.download
+      ssrs_soap_port = create_port
+      self.download_reports(ssrs_soap_port)
+    end
+
     def self.delete
       ssrs_soap_port = create_port
       self.delete_datasources(ssrs_soap_port)
@@ -56,6 +61,35 @@ module SSRS
         ssrs_soap_port.mkdir(File.dirname(report.name))
         ssrs_soap_port.createReport(report.name, report.generate_upload_version)
       end
+    end
+
+    def self.download_reports(ssrs_soap_port)
+      dirs = SSRS::Config.upload_dirs.collect { |d| d.split('/').delete_if { |p| p == '' }.first }.sort.uniq
+
+      download_folders(ssrs_soap_port, dirs, SSRS::Config.download_reports_dir)
+    end
+
+    def self.download_folders(ssrs_soap_port, dirs, target_dir)
+      dirs.each do |dir|
+        download_folder(ssrs_soap_port, dir, target_dir)
+      end
+    end
+
+    def self.download_folder(ssrs_soap_port, dir, target_dir)
+      reports = ssrs_soap_port.listReports(dir)
+      folder_dir = "#{target_dir}/#{dir}"
+      FileUtils.mkdir_p folder_dir
+      reports.each do |report|
+        target_file = "#{folder_dir}/#{report}.rdl"
+        ssrs_soap_port.downloadReport("#{dir}/#{report}", target_file)
+        contents = IO.read(target_file)
+        File.open(target_file, 'wb') do |f|
+          f.write contents.gsub("#{SSRS::Config.upload_prefix}/#{DataSource::BASE_PATH}/", '')
+        end
+      end
+
+      folders = ssrs_soap_port.listFolders(dir)
+      download_folders(ssrs_soap_port, folders, folder_dir)
     end
   end
 end
