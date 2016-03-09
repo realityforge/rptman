@@ -106,7 +106,9 @@ module SSRS
       end
 
       folders = ssrs_soap_port.listFolders(dir)
-      download_folders(ssrs_soap_port, folders, folder_dir)
+      download_folders(ssrs_soap_port,
+                       folders.collect{|f| "#{dir}/#{f}"},
+                       target_dir)
     end
   end
 end
