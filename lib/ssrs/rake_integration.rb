@@ -23,8 +23,12 @@ module SSRS #nodoc
         task "#{SSRS::Config.task_prefix}:setup" do
           a = Buildr.artifact('org.realityforge.sqlserver.ssrs:ssrs:jar:1.1')
           a.invoke
-          $CLASSPATH << a.to_s
-          Java::OrgRealityforgeSqlserverSsrs::SSRS.setupLogger(false)
+          if defined?(JRUBY_VERSION)
+            $CLASSPATH << a.to_s
+            Java::OrgRealityforgeSqlserverSsrs::SSRS.setupLogger(false)
+          else
+            Java.classpath << a.to_s
+          end
         end
 
         desc 'Generate MS VS projects for each report dir'
