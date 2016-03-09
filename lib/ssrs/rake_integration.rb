@@ -40,9 +40,14 @@ module SSRS #nodoc
 
         task '::clean' => "#{SSRS::Config.task_prefix}:vs_projects:clean"
 
-        desc 'Upload reports to SSRS server'
+        desc 'Upload reports and datasources to SSRS server'
         task "#{SSRS::Config.task_prefix}:ssrs:upload" => ["#{SSRS::Config.task_prefix}:setup"] do
           SSRS::Uploader.upload
+        end
+
+        desc 'Upload just reports to SSRS server'
+        task "#{SSRS::Config.task_prefix}:ssrs:upload_reports" => ["#{SSRS::Config.task_prefix}:setup"] do
+          SSRS::Uploader.upload_only_reports
         end
 
         desc 'Delete reports from the SSRS server'

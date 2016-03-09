@@ -6,6 +6,11 @@ module SSRS
       self.upload_reports(ssrs_soap_port)
     end
 
+    def self.upload_only_reports
+      ssrs_soap_port = create_port
+      self.upload_reports(ssrs_soap_port)
+    end
+
     def self.download
       ssrs_soap_port = create_port
       self.download_reports(ssrs_soap_port)
