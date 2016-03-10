@@ -1,28 +1,28 @@
-= rptman
+# rptman
 
 This tool includes code and a suite of rake tasks for uploading SSRS
 reports to a server. The tool can also generate project files for
 the "SQL Server Business Intelligence Development Studio".
 
-== Installation
+## Installation
 
-The extension is packaged as a jruby gem named "rptman", consult the ruby
+The extension is packaged as a ruby gem named 'rptman', consult the ruby
 gems installation steps but typically it is
 
-  jgem install rptman
+    $ gem install rptman
 
-== Basic Overview
+## Basic Overview
 
 Reports are stored in sub-directories of a <report-dir>. The filename
 of the report must end with ".rdl". The directory hierarchy on the local
 file system is mirrored on the SSRS server during an upload. So if a file
 exists with the name
 
-  <report-dir>/IRIS/Coordination/Tour Of Duty Report.rdl
+    <report-dir>/IRIS/Coordination/Tour Of Duty Report.rdl
 
 It will be uploaded to the SSRS server with the path
 
-  /IRIS/Coordination/Tour Of Duty Report
+    /IRIS/Coordination/Tour Of Duty Report
 
 Every top level directory on the local file system that includes a report
 file is deleted when it during the upload process. So in the above scenario
@@ -43,26 +43,38 @@ The configuration data for determining which SSRS instance and prefix to use
 is in a yaml file with a format described below. The easiest way to use the
 tool is to create a ruby script such as the following;
 
-  gem 'rptman'
-
-  require 'rptman'
-
-  # The configuration file
-  SSRS::Config.config_filename = "database.yml"
-
-  # The directory in which the reports are stored
-  SSRS::Config.reports_dir = "reports"
-
-  # Define a data source named IRIS_CENTRAL that has
-  # configration data stored under the key 'central'
-  SSRS::Config.define_datasource('IRIS_CENTRAL','central')
-
-  # actually run the tool
-  SSRS::Shell.run
+    gem 'rptman'
+  
+    require 'rptman'
+  
+    # The configuration file
+    SSRS::Config.config_filename = "database.yml"
+  
+    # The directory in which the reports are stored
+    SSRS::Config.reports_dir = "reports"
+  
+    # Define a data source named IRIS_CENTRAL that has
+    # configration data stored under the key 'central'
+    SSRS::Config.define_datasource('IRIS_CENTRAL','central')
+  
+    # actually run the tool
+    SSRS::Shell.run
 
 The script can then be run with a -h parameter to see the various options.
 
-== Configuration Format
+## Rake/Buildr integration
+
+Rptman also integrates with [Buildr](http://buildr.apache.org) or [Rake](http://rake.rubyforge.org/)
+by defining the following tasks:
+
+    $ buildr rptman:ssrs:delete                       # Delete reports from the SSRS server
+    $ buildr rptman:ssrs:download                     # Download reports from the SSRS server
+    $ buildr rptman:ssrs:upload                       # Upload reports and datasources to SSRS server
+    $ buildr rptman:ssrs:upload_reports               # Upload just reports to SSRS server
+    $ buildr rptman:vs_projects:clean                 # Clean generated Visual Studio/BIDS projects
+    $ buildr rptman:vs_projects:generate              # Generate MS VS projects for each report dir
+
+## Configuration Format
 
 The configuration is stored in a yaml file. The configuration file format
 allows for multiple "environments" (a.k.a. configuration) in one file. Most
@@ -105,7 +117,7 @@ Here is an example configuration file:
     host: sqlserver.example.com
     instance: myinstance
 
-=== Project Configurations
+### Project Configurations
 
 The "SQL Server Business Intelligence Development Studio" allows each project to
 have zero or more "Configurations". These configurations roughly correspond to the
@@ -117,7 +129,7 @@ differentiated in that it builds and deploys the report by default. The tool wil
 also create a "Release" configuration that use the settings from the "production"
 environment if a "production" environment exists in the configuration file.
 
-== Credit
+## Credit
 
 The gem was initially developed by StockSoftware for use in the Department
 of Sustainability and Environment, Victoria, Australia.
