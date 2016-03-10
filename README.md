@@ -92,30 +92,30 @@ specified then integrated security is used.
 
 Here is an example configuration file:
 
-  ssrs_development:
-    report_target: http://ssrs-dev.example.com/SSRS01_WS
-    prefix: /Auto/PD42/DEV
-
-  central_development:
-    database: PD42_IRIS_CENTRAL_DEV
-    username: MyUsername
-    password: MyPassword
-    host: sqlserver-dev.example.com
-    instance: myinstance
-
-  ssrs_production:
-    report_target: http://ssrs.example.com/SSRS01_WS
-    prefix: /Auto
-    domain: example.com
-    username: MyUsername
-    password: MyPassword
-
-  central_production:
-    database: IRIS_CENTRAL
-    username: MyUsername
-    password: MyPassword
-    host: sqlserver.example.com
-    instance: myinstance
+    ssrs_development:
+      report_target: http://ssrs-dev.example.com/SSRS01_WS
+      prefix: /Auto/PD42/DEV
+  
+    central_development:
+      database: PD42_IRIS_CENTRAL_DEV
+      username: MyUsername
+      password: MyPassword
+      host: sqlserver-dev.example.com
+      instance: myinstance
+  
+    ssrs_production:
+      report_target: http://ssrs.example.com/SSRS01_WS
+      prefix: /Auto
+      domain: example.com
+      username: MyUsername
+      password: MyPassword
+  
+    central_production:
+      database: IRIS_CENTRAL
+      username: MyUsername
+      password: MyPassword
+      host: sqlserver.example.com
+      instance: myinstance
 
 ### Project Configurations
 
