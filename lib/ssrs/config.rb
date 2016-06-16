@@ -132,6 +132,10 @@ module SSRS
         load_ssrs_config(env_key)
       end
 
+      def config_data=(config_data)
+        @config_data = config_data
+      end
+
       private
 
       def upload_path(filename)
