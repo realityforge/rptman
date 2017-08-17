@@ -44,19 +44,19 @@ is in a yaml file with a format described below. The easiest way to use the
 tool is to create a ruby script such as the following;
 
     gem 'rptman'
-  
+
     require 'rptman'
-  
+
     # The configuration file
     SSRS::Config.config_filename = "database.yml"
-  
+
     # The directory in which the reports are stored
     SSRS::Config.reports_dir = "reports"
-  
+
     # Define a data source named IRIS_CENTRAL that has
     # configration data stored under the key 'central'
     SSRS::Config.define_datasource('IRIS_CENTRAL','central')
-  
+
     # actually run the tool
     SSRS::Shell.run
 
@@ -95,21 +95,21 @@ Here is an example configuration file:
     ssrs_development:
       report_target: http://ssrs-dev.example.com/SSRS01_WS
       prefix: /Auto/PD42/DEV
-  
+
     central_development:
       database: PD42_IRIS_CENTRAL_DEV
       username: MyUsername
       password: MyPassword
       host: sqlserver-dev.example.com
       instance: myinstance
-  
+
     ssrs_production:
       report_target: http://ssrs.example.com/SSRS01_WS
       prefix: /Auto
       domain: example.com
       username: MyUsername
       password: MyPassword
-  
+
     central_production:
       database: IRIS_CENTRAL
       username: MyUsername

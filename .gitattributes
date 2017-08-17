@@ -1,1 +1,12 @@
-* crlf=input
+# DO NOT EDIT: File is auto-generated
+* -text
+*.gemspec text
+*.md text
+*.rb text
+*.yaml text
+.gitattributes text
+.gitignore text
+CHANGELOG text
+Gemfile text
+LICENSE text
+Rakefile text
