@@ -22,8 +22,6 @@ the "SQL Server Business Intelligence Development Studio".
   s.test_files         = `git ls-files -- {spec}/*`.split("\n")
   s.require_paths  = %w(lib)
 
-  s.has_rdoc         = false
 
-  s.has_rdoc           = false
   s.rdoc_options       = %w(--line-numbers --inline-source --title rptman)
 end
