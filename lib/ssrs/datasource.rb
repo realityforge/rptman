@@ -5,11 +5,7 @@ module SSRS
 
     def initialize(name)
       self.name = name
-      self.datasource_id = if defined?(JRUBY_VERSION)
-        Java::JavaUtil::UUID.randomUUID.toString
-      else
-        Java.java.util.UUID.randomUUID.toString
-      end
+      self.datasource_id = SecureRandom.uuid
     end
 
     def host_spec
