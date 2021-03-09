@@ -60,11 +60,6 @@ module SSRS #nodoc
           SSRS::Uploader.delete
         end
 
-        desc 'Download reports from the SSRS server'
-        task "#{SSRS::Config.task_prefix}:ssrs:download" => ["#{SSRS::Config.task_prefix}:setup"] do
-          SSRS::Uploader.download
-        end
-
         @@defined_init_tasks = true
       end
     end
