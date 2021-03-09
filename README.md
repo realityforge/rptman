@@ -68,7 +68,6 @@ Rptman also integrates with [Buildr](http://buildr.apache.org) or [Rake](http://
 by defining the following tasks:
 
     $ buildr rptman:ssrs:delete                       # Delete reports from the SSRS server
-    $ buildr rptman:ssrs:download                     # Download reports from the SSRS server
     $ buildr rptman:ssrs:upload                       # Upload reports and datasources to SSRS server
     $ buildr rptman:ssrs:upload_reports               # Upload just reports to SSRS server
     $ buildr rptman:vs_projects:clean                 # Clean generated Visual Studio/BIDS projects
