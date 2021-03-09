@@ -13,7 +13,7 @@ module SSRS
     end
 
     def symbolic_name
-      "#{DataSource::BASE_PATH}/#{self.name}"
+      "/#{DataSource::BASE_PATH}/#{self.name}"
     end
 
     def connection_string
