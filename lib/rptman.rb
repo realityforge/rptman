@@ -3,7 +3,6 @@ require 'yaml'
 require 'optparse'
 
 require 'ssrs/version'
-require 'ssrs/core'
 require 'ssrs/config'
 require 'ssrs/datasource'
 require 'ssrs/report_project'
