@@ -15,24 +15,48 @@
 module SSRS #nodoc
   module Build #nodoc
 
+    class << self
+      def ssrs_tool(action, options = {})
+        filename = generate_config_file
+
+        args = []
+        args << '--report-target' << SSRS::Config.report_target
+        args << '--upload-prefix' << SSRS::Config.upload_prefix
+        args << '--config-filename' << filename
+        args << '--domain' << SSRS::Config.domain
+        args << '--username' << SSRS::Config.username
+        args << '--password' << SSRS::Config.password
+        args << action.to_s
+
+        Java::Commands.java 'org.realityforge.sqlserver.ssrs.Main', *(args + [{ :classpath => Buildr.artifacts(['org.realityforge.sqlserver.ssrs:ssrs:jar:all:1.2']), :properties => options[:properties], :java_args => options[:java_args] }])
+      end
+
+      private
+
+      def generate_config_file
+        config = { dataSources: [], reports: [] }
+
+        SSRS::Config.datasources.each do |ds|
+          config[:dataSources] << { name: ds.symbolic_name, connectionString: ds.connection_string }
+        end
+        SSRS::Config.reports.each do |report|
+          config[:reports] << { name: report.name, filename: report.generate_upload_version }
+        end
+
+        filename = "#{SSRS::Config.temp_directory}/upload_config.json"
+        FileUtils.mkdir_p File.dirname(filename)
+        IO.write(filename, config.to_json)
+        filename
+      end
+    end
+
     @@defined_init_tasks = false
 
     def self.define_basic_tasks
       unless @@defined_init_tasks
 
-        task "#{SSRS::Config.task_prefix}:setup" do
-          a = Buildr.artifact('org.realityforge.sqlserver.ssrs:ssrs:jar:1.1')
-          a.invoke
-          if defined?(JRUBY_VERSION)
-            $CLASSPATH << a.to_s
-            Java::OrgRealityforgeSqlserverSsrs::SSRS.setupLogger(false)
-          else
-            Java.classpath << a.to_s
-          end
-        end
-
         desc 'Generate MS VS projects for each report dir'
-        task "#{SSRS::Config.task_prefix}:vs_projects:generate" => ["#{SSRS::Config.task_prefix}:setup"] do
+        task "#{SSRS::Config.task_prefix}:vs_projects:generate" do
           SSRS::BIDS.generate
         end
 
@@ -46,18 +70,18 @@ module SSRS #nodoc
         task '::clean' => "#{SSRS::Config.task_prefix}:vs_projects:clean"
 
         desc 'Upload reports and datasources to SSRS server'
-        task "#{SSRS::Config.task_prefix}:ssrs:upload" => ["#{SSRS::Config.task_prefix}:setup"] do
-          SSRS::Uploader.upload
+        task "#{SSRS::Config.task_prefix}:ssrs:upload" do
+          SSRS::Build.ssrs_tool('upload')
         end
 
         desc 'Upload just reports to SSRS server'
-        task "#{SSRS::Config.task_prefix}:ssrs:upload_reports" => ["#{SSRS::Config.task_prefix}:setup"] do
-          SSRS::Uploader.upload_only_reports
+        task "#{SSRS::Config.task_prefix}:ssrs:upload_reports" do
+          SSRS::Build.ssrs_tool('upload_reports')
         end
 
         desc 'Delete reports from the SSRS server'
-        task "#{SSRS::Config.task_prefix}:ssrs:delete" => ["#{SSRS::Config.task_prefix}:setup"] do
-          SSRS::Uploader.delete
+        task "#{SSRS::Config.task_prefix}:ssrs:delete" do
+          SSRS::Build.ssrs_tool('delete')
         end
 
         @@defined_init_tasks = true
