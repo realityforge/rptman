@@ -15,14 +15,14 @@ module SSRS
     end
 
     def generate_upload_version
-      require 'tempfile'
+      filename = "#{SSRS::Config.temp_directory}/#{name}.rdl"
+      FileUtils.mkdir_p File.dirname(filename)
 
-      file = Tempfile.new('ssrs_report')
-      file.write IO.read(self.filename).
-                   gsub(/\<DataSourceReference\>(.*)\<\/DataSourceReference\>/,
-                        "<DataSourceReference>#{SSRS::Config.upload_prefix}/#{DataSource::BASE_PATH}/\\1</DataSourceReference>")
-      file.close
-      file.path
+      content = IO.read(self.filename).
+        gsub(/<DataSourceReference>(.*)<\/DataSourceReference>/,
+             "<DataSourceReference>#{SSRS::Config.upload_prefix}/#{DataSource::BASE_PATH}/\\1</DataSourceReference>")
+      IO.write(filename, content)
+      filename
     end
   end
 end

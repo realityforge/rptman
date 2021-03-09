@@ -28,6 +28,13 @@ module SSRS
         end
       end
 
+      attr_writer :temp_directory
+
+      def temp_directory
+        return @temp_directory unless @temp_directory.nil?
+        "#{base_directory}/target/rptman"
+      end
+
       attr_writer :environment
 
       def environment
