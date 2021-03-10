@@ -15,7 +15,7 @@ module SSRS
     end
 
     def generate_upload_version
-      filename = "#{SSRS::Config.temp_directory}/#{name}.rdl"
+      filename = "#{SSRS::Config.temp_directory}/#{name}.rdl".gsub('//','/')
       FileUtils.mkdir_p File.dirname(filename)
 
       content = IO.read(self.filename).
